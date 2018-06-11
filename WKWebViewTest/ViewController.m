@@ -17,12 +17,15 @@
 @implementation ViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    webView = [[WKWebView alloc]init];
-    [self.view addSubview:webView];
+    webView = [[WKWebView alloc]initWithFrame:CGRectZero];
+    
     webView.UIDelegate = self;
     webView.navigationDelegate = self;
-    NSURL* fileurl = [[NSBundle mainBundle] URLForResource:@"cjztdemo" withExtension:@"html"];
+//    NSURL* fileurl = [[NSBundle mainBundle] URLForResource:@"cjztdemo" withExtension:@"html"];
+    NSURL* fileurl = [[NSBundle mainBundle] URLForResource:@"tp" withExtension:@"html"];
     [webView loadRequest:[NSURLRequest requestWithURL:fileurl]];
+    
+    [self.view addSubview:webView];
     
 }
 
@@ -37,7 +40,13 @@
 }
 // 页面加载完成之后调用
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    webView.frame = self.view.bounds;
+    NSLog(@"finish-------------------\n");
+    NSLog(@"finish-------------------\n");
+    NSLog(@"finish-------------------\n");
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        webView.frame = self.view.bounds;
+    });
+    
 }
 // 页面加载失败时调用
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
